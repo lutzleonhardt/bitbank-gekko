@@ -1,5 +1,0 @@
-apikey = "abcedfg"
-
-[backtest]
-enable = true
-csv = "D:\repos\bitbank-gekko\test-data\bitbank-btc_eth.csv"

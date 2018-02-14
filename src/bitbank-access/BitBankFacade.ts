@@ -1,27 +1,25 @@
 import * as bitbank from 'bitbank-node-js-api'
-import { CsvReader } from './csv-reader'
 
-export interface IBitBankFassade extends bitbank.IBitBank {
+import { CsvReader } from './csv/CsvReader'
+import { IBitBankFacade } from './IBitBankFacade'
 
-    useApi(apiKey: string): this
-
-    useCsv(csv: string): this
-
-    /**
-     * used for mode csv; read the featureset by this time
-     */
-    currentDate: Date
-}
-
-export class BitBankFassade implements IBitBankFassade {
+/**
+ * Encapsulates access to BitBank prediction data (CSV or API)
+ */
+export class BitBankFacade implements IBitBankFacade {
 
     private bitbankApi: bitbank.IBitBank
 
     private bitbankCsv: CsvReader
 
-    public currentDate: Date
+    private currentDate: Date
 
     constructor(private currencyPair: bitbank.CurrencyPair) {
+    }
+
+    public setCurrentDate(date: Date) {
+        this.currentDate = date
+        return this
     }
 
     public useApi(apiKey: string): this {
@@ -36,17 +34,17 @@ export class BitBankFassade implements IBitBankFassade {
         return this
     }
 
-    public fetchAllPairs(callback: (featuresets: bitbank.IFeatureset[]) => void): void {
+    public fetchAllPairs(callback: (featureSets: bitbank.IFeatureSet[]) => void): void {
         if (this.bitbankApi) {
             return this.bitbankApi.fetchAllPairs(callback)
         }
         if (this.bitbankCsv) {
-            throw new Error('BitBankFassade.fetchAllPairs() is not implemented for mode csv')
+            throw new Error('BitBankFacade.fetchAllPairs() is not implemented for mode csv')
         }
-        this.throwFassadeError()
+        this.throwFacadeError()
     }
 
-    public fetchPair(currencyPair: bitbank.CurrencyPair, callback: (featureset: bitbank.IFeatureset) => void): void {
+    public fetchPair(currencyPair: bitbank.CurrencyPair, callback: (featureset: bitbank.IFeatureSet) => void): void {
         if (this.bitbankApi) {
             return this.bitbankApi.fetchPair(currencyPair, callback)
         }
@@ -55,17 +53,17 @@ export class BitBankFassade implements IBitBankFassade {
                 throw new Error('not supported. We can only initialize CsvReader with one currencyPair at a time')
             }
             this.bitbankCsv.getNextFeatureset(this.currentDate)
-                .then((featureset: bitbank.IFeatureset) => callback(featureset))
+                .then((featureset: bitbank.IFeatureSet) => callback(featureset))
                 .catch((error: any) => {
                     console.error(error)
                     throw new Error('error getting next featureset via bitbankCsv')
                 })
             return
         }
-        this.throwFassadeError()
+        this.throwFacadeError()
     }
 
-    public getHistoricalFeaturesets(currencyPair: bitbank.CurrencyPair, callback: (featuresets: bitbank.IFeatureset[]) => void): void {
+    public getHistoricalFeaturesets(currencyPair: bitbank.CurrencyPair, callback: (featuresets: bitbank.IFeatureSet[]) => void): void {
         if (this.bitbankApi) {
             return this.bitbankApi.getHistoricalFeaturesets(currencyPair, callback)
         }
@@ -74,7 +72,7 @@ export class BitBankFassade implements IBitBankFassade {
         }
     }
 
-    private throwFassadeError() {
-        throw new Error('use bitbankApi or bitbankCsv in BitBankFassade')
+    private throwFacadeError() {
+        throw new Error('use bitbankApi or bitbankCsv in BitBankFacade')
     }
 }

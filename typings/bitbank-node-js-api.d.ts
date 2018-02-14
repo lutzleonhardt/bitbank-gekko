@@ -1,5 +1,5 @@
-export = Bitbank
-declare namespace Bitbank {
+export = BitBank
+declare namespace BitBank {
     type CurrencyPair =
         'BTC_AMP' |
         'BTC_ARDR' |
@@ -75,7 +75,7 @@ declare namespace Bitbank {
         'XMR_NXT' |
         'XMR_ZEC'
 
-    interface IFeatureset {
+    interface IFeatureSet {
         id: number,
         weighted_trade_average60: number,
         weighted_trade_slope60: number,
@@ -116,11 +116,11 @@ declare namespace Bitbank {
     }
 
     interface IBitBank {
-        fetchAllPairs(callback: (featuresets: IFeatureset[]) => void): void
+        fetchAllPairs(callback: (featuresets: IFeatureSet[]) => void): void
 
-        fetchPair(currencyPair: CurrencyPair, callback: (featureset: IFeatureset) => void): void
+        fetchPair(currencyPair: CurrencyPair, callback: (featureset: IFeatureSet) => void): void
 
-        getHistoricalFeaturesets(currencyPair: CurrencyPair, callback: (featuresets: IFeatureset[]) => void): void
+        getHistoricalFeaturesets(currencyPair: CurrencyPair, callback: (featuresets: IFeatureSet[]) => void): void
     }
 
     function BitBank(apiKey: string): IBitBank
