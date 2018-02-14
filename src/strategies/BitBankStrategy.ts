@@ -11,8 +11,7 @@ class BitBankStrategy extends BitBankStrategyBase {
         if (featureSet) {
             console.log('found featureset: ', featureSet.date, featureSet.id, featureSet.power_imbalance)
             // not so good sample strategy
-            if (featureSet.power_imbalance > 1 
-                 && featureSet.wavg_distance_to_midpoint_percent60min > 0 
+            if (featureSet.wavg_distance_to_midpoint_percent60min > 0 
                  && featureSet.wavg_distance_to_midpoint_percent5min > 0  
                  && featureSet.wavg_distance_to_midpoint_percent30min > 0  
                  && featureSet.power_imbalance > 1  
