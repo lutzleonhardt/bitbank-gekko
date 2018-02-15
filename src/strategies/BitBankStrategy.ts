@@ -9,7 +9,7 @@ class BitBankStrategy extends BitBankStrategyBase {
         const featureSet = this.bitBankIndicator.result.lastFeatureset
         console.log('looking for bitbank featureset for candle started at ' + candle.start.toDate())
         if (featureSet) {
-            console.log('found featureset: ', featureSet.date, featureSet.id, featureSet.power_imbalance)
+            console.log('found featureset: ', JSON.stringify(featureSet))
             if (featureSet.wavg_distance_to_midpoint_percent60min > 0
                 && featureSet.wavg_distance_to_midpoint_percent5min > 0
                 && featureSet.wavg_distance_to_midpoint_percent30min > 0

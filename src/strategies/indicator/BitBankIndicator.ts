@@ -53,7 +53,8 @@ export class BitBankIndicator implements IGekkoIndicator {
     public run(candleProps: CandleProps, callback: (err: string, result: IIndicatorGekkoResult) => void): void {
         // candleProps props does not contain start time, therefore we use
 
-        const currentDate = moment(this.currentCandle.start).add(this.settings.candlePeriodInMinutes, 'minute')
+        const currentDate = moment(this.currentCandle.start)
+            .add(this.settings.candlePeriodInMinutes, 'minute')
 
         this.bitbankFacade
             .setCurrentDate(currentDate.toDate())
@@ -64,7 +65,7 @@ export class BitBankIndicator implements IGekkoIndicator {
                     const age = currentDate.diff(moment(featureset.date), 's')
                     const maxAge = this.settings.maxFeatureSetAgeInSeconds
                     if (age >= maxAge) {
-                        console.log(`featureSet is too old (older that ${maxAge}s)`)
+                        console.log(`featureSet is too old (${age}s older that ${maxAge}s)`)
                         featureset = null
                     }
                 }

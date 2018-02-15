@@ -76,6 +76,7 @@ declare namespace BitBank {
         'XMR_ZEC'
 
     interface IFeatureSet {
+        [index: string]: any // for accessing object via indexer
         id: number,
         weighted_trade_average60: number,
         weighted_trade_slope60: number,

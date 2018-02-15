@@ -34,9 +34,35 @@ export class BitBankFacade implements IBitBankFacade {
         return this
     }
 
+    private convertApiFeatureSetValue(property: string, value: string): string | Date | number {
+        switch (property) {
+            case 'currency_pair':
+                // type is string
+                return value
+            case 'create_date':
+            case 'date':
+                // type is number -> unix time
+                return new Date(parseFloat(value) * 1000 /* in ms */)
+            default:
+                // type is float
+                return parseFloat(value)
+        }
+    }
+
+    private convertApiFeatureSet(featureSet: bitbank.IFeatureSet): bitbank.IFeatureSet {
+        if (featureSet) {
+            for (const key in featureSet) {
+                featureSet[ key ] = this.convertApiFeatureSetValue(key, featureSet[ key ])
+            }
+        }
+        return featureSet
+    }
+
     public fetchAllPairs(callback: (featureSets: bitbank.IFeatureSet[]) => void): void {
         if (this.bitbankApi) {
-            return this.bitbankApi.fetchAllPairs(callback)
+            return this.bitbankApi.fetchAllPairs((featureSets: bitbank.IFeatureSet[]) => {
+                callback(featureSets.map(fs => this.convertApiFeatureSet(fs)))
+            })
         }
         if (this.bitbankCsv) {
             throw new Error('BitBankFacade.fetchAllPairs() is not implemented for mode csv')
@@ -44,9 +70,9 @@ export class BitBankFacade implements IBitBankFacade {
         this.throwFacadeError()
     }
 
-    public fetchPair(currencyPair: bitbank.CurrencyPair, callback: (featureset: bitbank.IFeatureSet) => void): void {
+    public fetchPair(currencyPair: bitbank.CurrencyPair, callback: (featureSet: bitbank.IFeatureSet) => void): void {
         if (this.bitbankApi) {
-            return this.bitbankApi.fetchPair(currencyPair, callback)
+            return this.bitbankApi.fetchPair(currencyPair, fs => callback(this.convertApiFeatureSet(fs)))
         }
         if (this.bitbankCsv) {
             if (currencyPair !== this.currencyPair) {
@@ -63,9 +89,11 @@ export class BitBankFacade implements IBitBankFacade {
         this.throwFacadeError()
     }
 
-    public getHistoricalFeaturesets(currencyPair: bitbank.CurrencyPair, callback: (featuresets: bitbank.IFeatureSet[]) => void): void {
+    public getHistoricalFeaturesets(currencyPair: bitbank.CurrencyPair, callback: (featureSets: bitbank.IFeatureSet[]) => void): void {
         if (this.bitbankApi) {
-            return this.bitbankApi.getHistoricalFeaturesets(currencyPair, callback)
+            return this.bitbankApi.getHistoricalFeaturesets(currencyPair, (featureSets: bitbank.IFeatureSet[]) => {
+                callback(featureSets.map(fs => this.convertApiFeatureSet(fs)))
+            })
         }
         if (this.bitbankCsv) {
             throw new Error('not implemented for bitbankCsv')
