@@ -53,7 +53,7 @@ export class BitBankIndicator implements IGekkoIndicator {
     public run(candleProps: CandleProps, callback: (err: string, result: IIndicatorGekkoResult) => void): void {
         // candleProps props does not contain start time, therefore we use
 
-        const currentDate = this.currentCandle.start.add(this.settings.candlePeriodInMinutes, 'minute')
+        const currentDate = moment(this.currentCandle.start).add(this.settings.candlePeriodInMinutes, 'minute')
 
         this.bitbankFacade
             .setCurrentDate(currentDate.toDate())

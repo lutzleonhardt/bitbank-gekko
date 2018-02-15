@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run tsc && npm run browserify && npm run copyfiles",
-    "copyfiles": "copyfiles -u 2 src/strategies/BitBankStrategy.toml dist",
+    "copyfiles": "copyfiles -u 2 src/strategies/*.toml dist",
     "tsc": "tsc",
-    "browserify": "browserify tmp/strategies/BitBankStrategy.js -o dist/BitBankStrategy.js --no-commondirs --node -s BitBankStrategy",
+    "browserify": "npm run browserify-1 && npm run browserify-2",
+    "browserify-1": "browserify tmp/strategies/BitBankStrategy.js -o dist/BitBankStrategy.js --no-commondirs --node -s BitBankStrategy",
+    "browserify-2": "browserify tmp/strategies/BitBankStrategy2.js -o dist/BitBankStrategy2.js --no-commondirs --node -s BitBankStrategy2",
     "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
   "author": "",
