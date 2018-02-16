@@ -61,8 +61,10 @@ export class CsvReader {
         })
     }
 
-    private static convertColumnContent(property: string, value: string): string | Date | number {
+    private static convertColumnContent(property: string, value: string): string | Date | number | boolean {
         switch (property) {
+            case 'should_sell':
+                return value === 'true' //not available in the default featureset (just for a special preprocessed featureset)
             case 'currency_pair':
                 // type is string
                 return value
