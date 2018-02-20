@@ -17,7 +17,7 @@ Copy over these 2 files from the dist directory:
 ```
 # API key for BitBank.nz predition data
 apiKey = "API-KEY"
-# currency-pair for which we wand predition data for
+# currency-pair for which we want predition data for
 pair = "BTC_ETH"
 # when prediction featureset is older than 60s it's not used by the strategy
 maxFeatureSetAgeInSeconds = 60
