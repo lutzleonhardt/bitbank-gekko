@@ -65,7 +65,7 @@ export class BitBankIndicator implements IGekkoIndicator {
                     const age = currentDate.diff(moment(featureset.date), 's')
                     const maxAge = this.settings.maxFeatureSetAgeInSeconds
                     if (age >= maxAge) {
-                        console.log(`featureSet is too old (${age}s older than ${maxAge}s)`)
+                        console.log(`featureSet ${featureset.id} is too old (${age}s older than ${maxAge}s)`)
                         featureset = null
                     }
                 }

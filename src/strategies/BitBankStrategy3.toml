@@ -2,6 +2,16 @@ apiKey = "API-KEY"
 pair = "BTC_ETH"
 maxFeatureSetAgeInSeconds = 60
 candlePeriodInMinutes = 1
+thresholdWavgDistanceToMidpointPercent60min = 0
+thresholdWavgDistanceToMidpointPercent5min = 0
+thresholdWavgDistanceToMidpointPercent30min = 0
+thresholdPowerImbalance = 1
+thresholdEstimatedFutureWavg5 = 1
+thresholdEstimatedFutureWavg30 = 1
+thresholdEstimatedFutureWavg60 = 1
+thresholdEstimatedFutureWavg120 = 1
+thresholdSumFeatures = 5.03
+thresholdBuyProfit = 0.065
 
 [backTest]
 enable = true
