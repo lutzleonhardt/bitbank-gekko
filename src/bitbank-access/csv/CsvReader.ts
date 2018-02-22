@@ -19,7 +19,7 @@ export class CsvReader {
 
     public constructor(private csv: string,
                        private currencyPair: bitbank.CurrencyPair) {
-        this.lineByLineReader = new LineByLineReader(csv)
+        this.lineByLineReader = new LineByLineReader(csv, { skipEmptyLines: true })
         this.lineByLineReader.on('line', (data) => this.getNextLine(data))
         this.lineByLineReader.on('error', (error) => console.error(error))
         this.lineByLineReader.on('end', () => this.endLine())

@@ -1,7 +1,7 @@
 export = LineByLineReader
 
 declare class LineByLineReader {
-    public constructor(csv: string)
+    public constructor(csv: string, options: { skipEmptyLines: boolean })
 
     public on(event: 'error' | 'line' | 'end', handler: (data: any) => void): void
 
