@@ -5,4 +5,4 @@ candlePeriodInMinutes = 1
 
 [backTest]
 enable = true
-csvPath = "/mnt/d/BitBank/BTC_ETH.csv"
+csvPath = "/mnt/d/repos/bitbank-gekko/backtest-data/bitbank-btc_eth-by-date.csv"

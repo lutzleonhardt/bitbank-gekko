@@ -11,8 +11,8 @@ thresholdEstimatedFutureWavg30 = 1
 thresholdEstimatedFutureWavg60 = 1
 thresholdEstimatedFutureWavg120 = 1
 thresholdSumFeatures = 5.03
-thresholdBuyProfit = 0.065
+thresholdBuyProfit = 0.0065
 
 [backTest]
 enable = true
-csvPath = "/mnt/d/BitBank/BTC_ETH.csv"
+csvPath = "/mnt/d/repos/bitbank-gekko/backtest-data/bitbank-btc_eth-by-date.csv"

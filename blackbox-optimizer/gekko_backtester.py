@@ -27,7 +27,7 @@ class GekkoBackTester:
     def execute_backtest(self, strategy_dict, market_dict):
         """"
         calculate the profit in an gekko backtest using specified config
-        :returns (profit_percent, profit_btc)
+        :returns (profit_percent, profit_btc, market_profit, trades)
         """
         self.__write_config_to_file(strategy_dict, market_dict)
         return self.__calculate_gekko_profit()
@@ -91,16 +91,29 @@ class GekkoBackTester:
             proc = subprocess.Popen(['node', self.gekko_file, '--backtest', '--config', self.gekko_config_file],
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
             (stdout, stderr) = proc.communicate()
-            profit_lines = stdout[-1011:]
+            result_lines = stdout[-1011:]
 
+            # market_profit
+            # 2018-02-23 00:21:36 (INFO):     (PROFIT REPORT) Market:                          -3.07340426%
+            market_line = re.search('Market:.+', result_lines).group().replace('\t', '').replace(' ', '')
+            # Market:-3.07340426%
+            market_profit = re.search(':.+%', market_line).group()[1:-1]
+
+            # amount of trades
+            # 2018-02-23 00:21:36 (INFO):     (PROFIT REPORT) amount of trades:                0
+            trades_line = re.search('amount of trades:.+', result_lines).group().replace('\t', '').replace(' ', '')
+            # amount of trades:0
+            trades = trades_line.split(':')[1]
+
+            # profit
             # 2018-02-21 11:06:41 (INFO):     (PROFIT REPORT) simulated profit:                1.91496099 BTC (1.91316262%)
-            line = re.search('simulated profit:.+', profit_lines).group().replace('\t', '').replace(' ', '')
+            profit_line = re.search('simulated profit:.+', result_lines).group().replace('\t', '').replace(' ', '')
             # simulated profit:1.91496099BTC(1.91316262%)
-            profit_percent = re.search('\(.+\)', line).group()[1:-2]
+            profit_percent = re.search('\(.+\)', profit_line).group()[1:-2]
             # 1.91316262
-            profit_btc = re.search(':.+BTC', line).group()[1:-3]
+            profit_btc = re.search(':.+BTC', profit_line).group()[1:-3]
             # 1.91496099
-            return float(profit_percent), float(profit_btc)
+            return float(profit_percent), float(profit_btc), float(market_profit), float(trades)
         except Exception as e:
             print(e)
             print('result:', stdout)

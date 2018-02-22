@@ -36,9 +36,11 @@ def blackbox_gekko(par):
         }
     }
     with GekkoBackTester(gekko_base_path, gekko_strategy) as gekko_backtester:
-        (profit_percent, profit_btc) = gekko_backtester.execute_backtest(gekko_strategy_config, gekko_market_dict)
+        (profit_percent, profit_btc, market_profit, trades) = gekko_backtester.execute_backtest(gekko_strategy_config,
+                                                                                                gekko_market_dict)
 
-    print('profit: ' + str(profit_percent) + '% (' + str(profit_btc) + 'BTC)')
+    print('profit: ' + str(profit_percent) + '% (' + str(
+        profit_btc) + 'BTC)\tmarket profit: ' + str(market_profit) + '%\ttrades: ' + str(trades))
 
     return -profit_percent
 

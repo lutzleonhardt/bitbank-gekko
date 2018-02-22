@@ -7,10 +7,11 @@
     "build": "npm run tsc && npm run browserify && npm run copyfiles",
     "copyfiles": "copyfiles -u 2 src/strategies/*.toml dist",
     "tsc": "tsc",
-    "browserify": "npm run browserify-1 && npm run browserify-2 && npm run browserify-3 && npm run browserify-preprocessed-data",
+    "browserify": "npm run browserify-1 && npm run browserify-2 && npm run browserify-3 && npm run browserify-4 && npm run browserify-preprocessed-data",
     "browserify-1": "browserify tmp/strategies/BitBankStrategy.js -o dist/BitBankStrategy.js --no-commondirs --node -s BitBankStrategy",
     "browserify-2": "browserify tmp/strategies/BitBankStrategy2.js -o dist/BitBankStrategy2.js --no-commondirs --node -s BitBankStrategy2",
     "browserify-3": "browserify tmp/strategies/BitBankStrategy3.js -o dist/BitBankStrategy3.js --no-commondirs --node -s BitBankStrategy3",
+    "browserify-4": "browserify tmp/strategies/BitBankStrategy4.js -o dist/BitBankStrategy4.js --no-commondirs --node -s BitBankStrategy4",
     "browserify-preprocessed-data": "browserify tmp/strategies/BitBankStrategyOnlyBacktestingPreprocessedData.js -o dist/BitBankStrategyOnlyBacktestingPreprocessedData.js --no-commondirs --node -s BitBankStrategyOnlyBacktestingPreprocessedData",
     "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
