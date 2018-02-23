@@ -1,0 +1,16 @@
+{
+  "name": "bitbank-graphite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@firebase/firestore": "^0.3.4",
+    "firebase": "^4.10.1",
+    "net": "^1.0.2"
+  }
+}
