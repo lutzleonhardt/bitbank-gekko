@@ -39,10 +39,13 @@ def blackbox_gekko(par):
         (profit_percent, profit_btc, market_profit, trades) = gekko_backtester.execute_backtest(gekko_strategy_config,
                                                                                                 gekko_market_dict)
 
-    print('profit: ' + str(profit_percent) + '% (' + str(
-        profit_btc) + 'BTC)\tmarket profit: ' + str(market_profit) + '%\ttrades: ' + str(trades))
+    minimum = -profit_percent
 
-    return -profit_percent
+    print('profit: ' + str(profit_percent) + '% (' + str(
+        profit_btc) + 'BTC)\tmarket profit: ' + str(market_profit) + '%\ttrades: ' + str(trades) + '\tmin: ' + str(
+        minimum))
+
+    return minimum
 
 
 def main():
